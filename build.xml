@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project basedir="." default="war" name="gae-iokebot">
+  <description>
+    IokeBot
+  </description>
+
+  <property file="build.properties"/>
+  <property file="default.build.properties"/>
+
+  <path id="build.classpath">
+    <fileset dir="${lib.dir}" includes="*.jar"/>
+  </path>
+
+  <target name="prepare" description="Creates the directories needed for building">
+    <mkdir dir="${build.dir}"/>
+    <mkdir dir="${classes.dir}"/>
+  </target>
+
+  <target name="compile" depends="prepare" description="Compile the source files for the project.">
+    <javac destdir="${classes.dir}" debug="true" source="${javac.version}" target="${javac.version}">
+      <classpath refid="build.classpath"/>
+      <src path="${src.dir}"/>
+      <include name="**/*.java"/>
+    </javac>
+
+    <copy todir="${classes.dir}" filtering="true" overwrite="true">
+      <fileset dir="${src.dir}" includes="**/*.properties"/>
+    </copy>
+
+    <copy todir="${classes.dir}">
+      <fileset dir="src/ioke" includes="**/*.ik"/>
+    </copy>
+  </target>
+
+  <target name="jar" depends="compile" description="Create the ikanserve.jar file">
+    <jar destfile="${lib.dir}/iokebot.jar">
+      <fileset dir="${classes.dir}">
+        <include name="**/*.class"/>
+        <include name="**/*.ik"/>
+        <include name="**/*.properties"/>
+      </fileset>
+    </jar>
+  </target>
+
+  <target name="clean" description="clean almost everything">
+    <delete dir="${build.dir}"/>
+    <delete file="${lib.dir}/iokebot.jar" quiet="true"/>
+    <delete file="iokebot.war" quiet="true"/>
+  </target>
+
+  <target name="war" depends="jar" description="Create the iokebot.war file">
+    <war destfile="iokebot.war" webxml="src/web/web.xml">
+      <fileset dir="." includes="_wave/*"/>
+      <lib dir="lib" includes="ikanserve.jar,ioke.jar,ioke-lib.jar,iokebot.jar,wave-robot-api.jar,json.jar,jsonrpc.jar"/>
+      <webinf dir="src/web" includes="appengine-web.xml"/>
+    </war>
+  </target>
+</project>
