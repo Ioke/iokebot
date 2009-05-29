@@ -13,10 +13,9 @@ IokeBot dispatch = method(
 
   events events select(type == com:google:wave:api:EventType field:BLIP_SUBMITTED) each(event,
     text = event blip document text
-    if(#/ioke:({code}.*)\n/ =~ text,
+    if(#/ioke:({code}.*)$/s =~ text,
       newBlip = event blip createChild
       view = newBlip document
-      view append("\n; #{it code}\n")
       view append(Message doText(it code) inspect)
     )
   )
