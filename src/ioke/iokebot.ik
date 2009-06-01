@@ -16,7 +16,12 @@ IokeBot dispatch = method(
     if(#/ioke:({code}.*)$/s =~ text,
       newBlip = event blip createChild
       view = newBlip document
-      view append(Message fromText(it code) evaluateOn(self, self) inspect)
+      bind(rescue(fn(c, view append("Had an error: #{escape(c report)}"))),
+        view append(escape(Message fromText(it code) evaluateOn(self, self) inspect)))
     )
   )
+)
+
+IokeBot escape = method(input,
+  input replaceAll("<", "&lt;") replaceAll(">", "&gt;")
 )
