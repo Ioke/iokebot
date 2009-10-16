@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <w:robot xmlns:w="http://wave.google.com/extensions/robots/1.0">
   <w:capabilities>
-    <w:capability name="wavelet_participants_changed" content="true" /> 
-    <w:capability name="blip_submitted" content="true" /> 
-    <w:capability name="wavelet_blip_created" content="true" /> 
-    <w:capability name="wavelet_title_changed" content="true" /> 
-    <w:capability name="blip_contributors_changed" content="true" /> 
-    <w:capability name="blip_deleted" content="true" /> 
-    <w:capability name="document_changed" content="true" /> 
+    <w:capability name="wavelet_participants_changed"/>
+    <w:capability name="blip_submitted"/>
   </w:capabilities>
-  <w:profile name="IokeBot" />
+  <w:profile name="Ioke the Robot" imageurl="http://ioke.org/img/IokeLogo.png" profileurl="http://ioke.org"/>
+  <w:version>4</w:version>
 </w:robot>
